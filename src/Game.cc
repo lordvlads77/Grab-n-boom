@@ -33,13 +33,20 @@ GameObject* wall6SlicedDown{};
 GameObject* wall7Down{};
 GameObject* wall8Down{};
 GameObject* Pillar1Left{};
+GameObject* Pillar1HeadLeft{};
 GameObject* Pillar2Left{};
+GameObject* Pillar2HeadLeft{};
 GameObject* Pillar3Left{};
+GameObject* Pillar3HeadLeft{};
 GameObject* Pillar1Right{};
+GameObject* Pillar1HeadRight{};
 GameObject* Pillar2Right{};
+GameObject* Pillar2HeadRight{};
 GameObject* Pillar3Right{};
+GameObject* Pillar3HeadRight{};
 GameObject* wall1MidUp{};
 GameObject* wall2MidUp{};
+GameObject* wall3MidUp{};
 Animation* idleAnimation{new Animation()};
 Animation* runAnimation{new Animation()};
 
@@ -111,20 +118,36 @@ Game::Game()
   wall7Down->SetTagName("Wall7DownHor");
   wall8Down = new GameObject(ASSETS_TILES, 4.f, 8, 32, 0, 0, 928, 875, b2BodyType::b2_staticBody, world, window);
   wall8Down->SetTagName("Wall8HorDown");
-  Pillar1Left = new GameObject(ASSETS_TILES, 4.f, 16, 16, 13, 13, 100, 300, b2BodyType::b2_staticBody, world, window);
+  Pillar1Left = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 100, 300, b2BodyType::b2_staticBody, world, window);
   Pillar1Left->SetTagName("Pillar1Left");
+  Pillar1HeadLeft = new GameObject(ASSETS_TILES, 4.f, 16, 16, 13, 11, 100, 205, b2BodyType::b2_staticBody, world, window);
+  Pillar1HeadLeft->SetTagName("Pillar1HeadLeft");
   Pillar2Left = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 100, 475, b2BodyType::b2_staticBody, world, window);
   Pillar2Left->SetTagName("Pillar2Left");
+  Pillar2HeadLeft = new GameObject(ASSETS_TILES, 4.f, 16, 16, 13, 11, 100, 380, b2BodyType::b2_staticBody, world, window);
+  Pillar2HeadLeft->SetTagName("Pillar2HeadLeft");
   Pillar3Left = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 100, 650, b2BodyType::b2_staticBody, world, window);
   Pillar3Left->SetTagName("Pillar3Left");
+  Pillar3HeadLeft = new GameObject(ASSETS_TILES, 4.f, 16, 16, 13, 11, 100, 555, b2BodyType::b2_staticBody, world, window);
+  Pillar3HeadLeft->SetTagName("Pillar3HeadLeft");
   Pillar1Right = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 900, 275, b2BodyType::b2_staticBody, world, window);
   Pillar1Right->SetTagName("Pillar1Right");
+  Pillar1HeadRight = new GameObject(ASSETS_TILES, 4.f, 16, 16, 13, 11, 900, 180, b2BodyType::b2_staticBody, world, window);
+  Pillar1HeadRight->SetTagName("Pillar1HeadRight");
   Pillar2Right = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 900, 475, b2BodyType::b2_staticBody, world, window);
   Pillar2Right->SetTagName("Pillar2Right");
+  Pillar2HeadRight = new GameObject(ASSETS_TILES, 4.f, 16, 16, 13, 11, 900, 380, b2BodyType::b2_staticBody, world, window);
+  Pillar2HeadRight->SetTagName("Pillar2HeadRight");
   Pillar3Right = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 900, 650, b2BodyType::b2_staticBody, world, window);
   Pillar3Right->SetTagName("Pillar3Right");
-  wall1MidUp = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 375  , 375, b2BodyType::b2_staticBody, world, window);
+  Pillar3HeadRight = new GameObject(ASSETS_TILES, 4.f, 16, 16, 13, 11, 900, 555, b2BodyType::b2_staticBody, world, window);
+  Pillar3HeadRight->SetTagName("Pillar3HeadRight");
+  wall1MidUp = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 375, 375, b2BodyType::b2_staticBody, world, window);
   wall1MidUp->SetTagName("Wall1MidUp");
+  wall2MidUp = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 500, 375, b2BodyType::b2_staticBody, world, window);
+  wall2MidUp->SetTagName("Wall2MidUp");
+  wall3MidUp = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 625, 375, b2BodyType::b2_staticBody, world, window);
+  wall3MidUp->SetTagName("Wall3MidUp");
   tileGroup = new TileGroup(window, 12, 12, ASSETS_MAPS, 5.3f, 16, 16, ASSETS_TILES);
 
   contactEventManager = new ContactEventManager(gameObjects, gameObjectsDeleteList);
@@ -171,12 +194,20 @@ void Game::Start()
   AddGameObject(wall7Down);
   AddGameObject(wall8Down);
   AddGameObject(Pillar1Left);
+  AddGameObject(Pillar1HeadLeft);
   AddGameObject(Pillar2Left);
+  AddGameObject(Pillar2HeadLeft);
   AddGameObject(Pillar3Left);
+  AddGameObject(Pillar3HeadLeft);
   AddGameObject(Pillar1Right);
+  AddGameObject(Pillar1HeadRight);
   AddGameObject(Pillar2Right);
+  AddGameObject(Pillar2HeadRight);
   AddGameObject(Pillar3Right);
+  AddGameObject(Pillar3HeadRight);
   AddGameObject(wall1MidUp);
+  AddGameObject(wall2MidUp);
+  AddGameObject(wall3MidUp);
   textObj1->SetTextStr("Arde mi Poderoso Cosmo Dorado!!!");
   idleAnimation = new Animation(player1->GetSprite(), 0, 5, 0.05f, 5);
   runAnimation = new Animation(player1->GetSprite(), 0, 5, 0.08f, 6);
@@ -275,7 +306,7 @@ void Game::Draw()
   }
 
   window->draw(*textObj1->GetText());
-  //world->DebugDraw();
+  world->DebugDraw();
 }
 
 //Keyboard, joysticks, etc.
