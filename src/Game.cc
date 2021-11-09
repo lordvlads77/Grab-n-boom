@@ -13,6 +13,9 @@ float deltaTime{};
 Player* player1{};
 GameObject* chest1{};
 GameObject* light1{};
+GameObject* light2{};
+GameObject* light3{};
+GameObject* light4{};
 GameObject* enemy1{};
 GameObject* enemy2{};
 GameObject* enemy3{};
@@ -47,6 +50,17 @@ GameObject* Pillar3HeadRight{};
 GameObject* wall1MidUp{};
 GameObject* wall2MidUp{};
 GameObject* wall3MidUp{};
+GameObject* wall1MidDown{};
+GameObject* wall2MidDown{};
+GameObject* wall3MidDown{};
+GameObject* Pillar1MidLeft{};
+GameObject* Pillar1MidLeftHead{};
+GameObject* Pillar2MidLeft{};
+/*GameObject* Pillar2MidLeftHead{};
+GameObject* Pillar1MidRight{};
+GameObject* Pillar1MidRightHead{};
+GameObject* Pillar2MidRight{};
+GameObject* Pillar2MidRightHead{};*/
 Animation* idleAnimation{new Animation()};
 Animation* runAnimation{new Animation()};
 
@@ -64,6 +78,9 @@ Animation* lightIdle{};
 Animation* chestIdle{};
 Animation* enemeyIdle{};
 Animation* enemyIdle2{};
+Animation* lightIdle2{};
+Animation* lightIdle3{};
+Animation* lightIdle4{};
 
 
 Game::Game()
@@ -76,15 +93,21 @@ Game::Game()
   gameObjects = new std::vector<GameObject*>();
   gameObjectsDeleteList = new std::vector<GameObject*>();
 
-  player1 = new Player(ASSETS_SPRITES, 4.f, 16, 16, 0, 5, 300, 200, 200.f, b2BodyType::b2_dynamicBody, world, window);
+  player1 = new Player(ASSETS_SPRITES, 4.f, 16, 16, 0, 5, 200, 250, 200.f, b2BodyType::b2_dynamicBody, world, window);
   player1->SetTagName("Player");
-  chest1 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 1, 695, 500, b2BodyType::b2_staticBody, world, window);
+  chest1 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 1, 500, 745, b2BodyType::b2_staticBody, world, window);
   chest1->SetTagName("chest");
   light1 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 200, 175, b2BodyType::b2_staticBody, world, window);
   light1->SetTagName("light");
-  enemy1 = new GameObject(ASSETS_SPRITES, 3.f, 16, 16, 0, 3, 350, 200,b2BodyType::b2_staticBody, world, window);
+  light2 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 200, 775, b2BodyType::b2_staticBody, world, window);
+  light2->SetTagName("light2");
+  light3 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 835, 175, b2BodyType::b2_staticBody, world, window);
+  light3->SetTagName("light3");
+  light4 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 835, 775, b2BodyType::b2_staticBody, world, window);
+  light4->SetTagName("light4");
+  enemy1 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 275, 250,b2BodyType::b2_staticBody, world, window);
   enemy1->SetTagName("enemy");
-  enemy2 = new GameObject(ASSETS_SPRITES, 3.f, 16, 16, 0, 3, 695, 300, b2BodyType::b2_staticBody, world, window);
+  enemy2 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 275, 400, b2BodyType::b2_staticBody, world, window);
   enemy2->SetTagName("enemy2");
   wall1 = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 100, 65, b2BodyType::b2_staticBody, world, window);
   wall1->SetTagName("WallHorUp1");
@@ -148,6 +171,16 @@ Game::Game()
   wall2MidUp->SetTagName("Wall2MidUp");
   wall3MidUp = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 625, 375, b2BodyType::b2_staticBody, world, window);
   wall3MidUp->SetTagName("Wall3MidUp");
+  wall1MidDown = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 375, 650, b2BodyType::b2_staticBody, world, window);
+  wall1MidDown->SetTagName("Wall1MidDown");
+  wall2MidDown = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 500, 650, b2BodyType::b2_staticBody, world, window);
+  wall2MidDown->SetTagName("Wall2MidDown");
+  wall3MidDown = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 625, 650, b2BodyType::b2_staticBody, world, window);
+  wall3MidDown->SetTagName("Wall3MidDown");
+  /*Pillar1MidLeft = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 285, 475, b2BodyType::b2_staticBody, world, window);
+  Pillar1MidLeft->SetTagName("Pillar1MidLeft");
+  Pillar2MidLeft = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 285, 650, b2BodyType::b2_staticBody, world, window);
+  Pillar2MidLeft->SetTagName("Pillar2MidLeft");*/
   tileGroup = new TileGroup(window, 12, 12, ASSETS_MAPS, 5.3f, 16, 16, ASSETS_TILES);
 
   contactEventManager = new ContactEventManager(gameObjects, gameObjectsDeleteList);
@@ -157,6 +190,9 @@ Game::Game()
   chestIdle = new Animation(chest1->GetSprite(), 6, 13, 0.1f, 1);
   enemeyIdle = new Animation(enemy1->GetSprite(), 0, 5, 0.1f, 3);
   enemyIdle2 = new Animation(enemy2->GetSprite(), 0, 5, 0.1f, 3);
+  lightIdle2 = new Animation(light2->GetSprite(), 6, 11, 0.1f, 3);
+  lightIdle3 = new Animation(light3->GetSprite(), 6, 11, 0.1f, 3);
+  lightIdle4 = new Animation(light4->GetSprite(), 6, 11, 0.1f, 3);
 
 }
 
@@ -175,6 +211,9 @@ void Game::Start()
   AddGameObject(player1);
   AddGameObject(chest1);
   AddGameObject(light1);
+  AddGameObject(light2);
+  AddGameObject(light3);
+  AddGameObject(light4);
   AddGameObject(enemy1);
   AddGameObject(enemy2);
   AddGameObject(wall1);
@@ -208,6 +247,14 @@ void Game::Start()
   AddGameObject(wall1MidUp);
   AddGameObject(wall2MidUp);
   AddGameObject(wall3MidUp);
+  AddGameObject(wall1MidDown);
+  AddGameObject(wall2MidDown);
+  AddGameObject(wall3MidDown);
+  /*AddGameObject(Pillar1MidLeft);
+  AddGameObject(Pillar2MidLeft);
+  AddGameObject(Pillar1MidRight);
+  AddGameObject(Pillar2MidRight);*/
+  
   textObj1->SetTextStr("Arde mi Poderoso Cosmo Dorado!!!");
   idleAnimation = new Animation(player1->GetSprite(), 0, 5, 0.05f, 5);
   runAnimation = new Animation(player1->GetSprite(), 0, 5, 0.08f, 6);
@@ -243,9 +290,13 @@ void Game::Update()
   //circle->setPosition(player1->GetSprite()->getPosition());
 
   lightIdle->Play(deltaTime);
+  lightIdle2->Play(deltaTime);
+  lightIdle3->Play(deltaTime);
+  lightIdle4->Play(deltaTime);
   chestIdle->Play(deltaTime);
   enemeyIdle->Play(deltaTime);
   enemyIdle2->Play(deltaTime);
+
 
   if(std::abs(InputSystem::Axis().x) > 0 || std::abs(InputSystem::Axis().y) > 0)
   {
