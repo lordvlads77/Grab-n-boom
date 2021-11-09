@@ -16,9 +16,17 @@ GameObject* light1{};
 GameObject* light2{};
 GameObject* light3{};
 GameObject* light4{};
+GameObject* lightMiddle{};
+GameObject* kaboomMiddleLeft{};
+GameObject* kaboomMiddleRight{};
 GameObject* enemy1{};
 GameObject* enemy2{};
 GameObject* enemy3{};
+GameObject* enemy4{};
+GameObject* enemy5{};
+GameObject* enemy6{};
+GameObject* enemy7{};
+GameObject* enemy8{};
 GameObject* wall1{};
 GameObject* wall2{};
 GameObject* wall3{};
@@ -76,11 +84,20 @@ uint32 flags{};
 
 Animation* lightIdle{};
 Animation* chestIdle{};
-Animation* enemeyIdle{};
+Animation* enemyIdle{};
 Animation* enemyIdle2{};
+Animation* enemyIdle3{};
+Animation* enemyIdle4{};
+Animation* enemyIdle5{};
+Animation* enemyIdle6{};
+Animation* enemyIdle7{};
+Animation* enemyIdle8{};
 Animation* lightIdle2{};
 Animation* lightIdle3{};
 Animation* lightIdle4{};
+Animation* lightIdleMiddle{};
+Animation* KaboomIdleLeft{};
+Animation* kaboomIdleMiddleRight{};
 
 
 Game::Game()
@@ -98,17 +115,31 @@ Game::Game()
   chest1 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 1, 500, 745, b2BodyType::b2_staticBody, world, window);
   chest1->SetTagName("chest");
   light1 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 200, 175, b2BodyType::b2_staticBody, world, window);
-  light1->SetTagName("light");
+  light1->SetTagName("light1");
   light2 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 200, 775, b2BodyType::b2_staticBody, world, window);
   light2->SetTagName("light2");
   light3 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 835, 175, b2BodyType::b2_staticBody, world, window);
   light3->SetTagName("light3");
   light4 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 835, 775, b2BodyType::b2_staticBody, world, window);
   light4->SetTagName("light4");
+  lightMiddle = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 6, 3, 500, 525, b2BodyType::b2_staticBody, world, window);
+  lightMiddle->SetTagName("lightMiddle");
   enemy1 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 275, 250,b2BodyType::b2_staticBody, world, window);
   enemy1->SetTagName("enemy");
   enemy2 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 275, 400, b2BodyType::b2_staticBody, world, window);
   enemy2->SetTagName("enemy2");
+  enemy3 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 275, 550, b2BodyType::b2_staticBody, world, window);
+  enemy3->SetTagName("enemy3");
+  enemy4 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 275, 700, b2BodyType::b2_staticBody, world, window);
+  enemy4->SetTagName("enemy4");
+  enemy5 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 760, 250, b2BodyType::b2_staticBody, world, window);
+  enemy5->SetTagName("enemy5");
+  enemy6 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 760, 400, b2BodyType::b2_staticBody, world, window);
+  enemy6->SetTagName("enemy6");
+  enemy7 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 760, 550, b2BodyType::b2_staticBody, world, window);
+  enemy7->SetTagName("enemy7");
+  enemy8 = new GameObject(ASSETS_SPRITES, 4.f, 16, 16, 0, 3, 760, 700, b2BodyType::b2_staticBody, world, window);
+  enemy8->SetTagName("enemy8");
   wall1 = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 100, 65, b2BodyType::b2_staticBody, world, window);
   wall1->SetTagName("WallHorUp1");
   wall2 = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 225, 65, b2BodyType::b2_staticBody, world, window);
@@ -177,6 +208,10 @@ Game::Game()
   wall2MidDown->SetTagName("Wall2MidDown");
   wall3MidDown = new GameObject(ASSETS_TILES, 4.f, 32, 32, 0, 0, 625, 650, b2BodyType::b2_staticBody, world, window);
   wall3MidDown->SetTagName("Wall3MidDown");
+  kaboomMiddleLeft = new GameObject(ASSETS_SPRITES, 12.f, 16, 16, 6, 2, 400, 535, b2BodyType::b2_staticBody, world, window);
+  kaboomMiddleLeft->SetTagName("kaboomMiddleLeft");
+  kaboomMiddleRight = new GameObject(ASSETS_SPRITES, 12.f, 16, 16, 6, 2, 600, 535, b2BodyType::b2_staticBody, world, window);
+  kaboomMiddleRight->SetTagName("kaboomMiddleRight");
   /*Pillar1MidLeft = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 285, 475, b2BodyType::b2_staticBody, world, window);
   Pillar1MidLeft->SetTagName("Pillar1MidLeft");
   Pillar2MidLeft = new GameObject(ASSETS_TILES, 4.f, 16, 32, 13, 6, 285, 650, b2BodyType::b2_staticBody, world, window);
@@ -188,11 +223,20 @@ Game::Game()
 
   lightIdle = new Animation(light1->GetSprite(), 6, 11, 0.1f, 3);
   chestIdle = new Animation(chest1->GetSprite(), 6, 13, 0.1f, 1);
-  enemeyIdle = new Animation(enemy1->GetSprite(), 0, 5, 0.1f, 3);
+  enemyIdle = new Animation(enemy1->GetSprite(), 0, 5, 0.1f, 3);
   enemyIdle2 = new Animation(enemy2->GetSprite(), 0, 5, 0.1f, 3);
+  enemyIdle3 = new Animation(enemy3->GetSprite(), 0, 5, 0.1f, 3);
+  enemyIdle4 = new Animation(enemy4->GetSprite(), 0, 5, 0.1f, 3);
+  enemyIdle5 = new Animation(enemy5->GetSprite(), 0, 5, 0.1f, 3);
+  enemyIdle6 = new Animation(enemy6->GetSprite(), 0, 5, 0.1f, 3);
+  enemyIdle7 = new Animation(enemy7->GetSprite(), 0, 5, 0.1f, 3);
+  enemyIdle8 = new Animation(enemy8->GetSprite(), 0, 5, 0.1f, 3);
   lightIdle2 = new Animation(light2->GetSprite(), 6, 11, 0.1f, 3);
   lightIdle3 = new Animation(light3->GetSprite(), 6, 11, 0.1f, 3);
   lightIdle4 = new Animation(light4->GetSprite(), 6, 11, 0.1f, 3);
+  lightIdleMiddle = new Animation(lightMiddle->GetSprite(), 6, 11, 0.1f, 3);
+  KaboomIdleLeft = new Animation(kaboomMiddleLeft->GetSprite(), 6, 10, 0.1f, 2);
+  kaboomIdleMiddleRight = new Animation(kaboomMiddleRight->GetSprite(), 6, 10, 0.1f, 2);
 
 }
 
@@ -214,8 +258,15 @@ void Game::Start()
   AddGameObject(light2);
   AddGameObject(light3);
   AddGameObject(light4);
+  AddGameObject(lightMiddle);
   AddGameObject(enemy1);
   AddGameObject(enemy2);
+  AddGameObject(enemy3);
+  AddGameObject(enemy4);
+  AddGameObject(enemy5);
+  AddGameObject(enemy6);
+  AddGameObject(enemy7);
+  AddGameObject(enemy8);
   AddGameObject(wall1);
   AddGameObject(wall2);
   AddGameObject(wall3);
@@ -250,6 +301,8 @@ void Game::Start()
   AddGameObject(wall1MidDown);
   AddGameObject(wall2MidDown);
   AddGameObject(wall3MidDown);
+  AddGameObject(kaboomMiddleLeft);
+  AddGameObject(kaboomMiddleRight);
   /*AddGameObject(Pillar1MidLeft);
   AddGameObject(Pillar2MidLeft);
   AddGameObject(Pillar1MidRight);
@@ -293,9 +346,18 @@ void Game::Update()
   lightIdle2->Play(deltaTime);
   lightIdle3->Play(deltaTime);
   lightIdle4->Play(deltaTime);
+  lightIdleMiddle->Play(deltaTime);
   chestIdle->Play(deltaTime);
-  enemeyIdle->Play(deltaTime);
+  enemyIdle->Play(deltaTime);
   enemyIdle2->Play(deltaTime);
+  enemyIdle3->Play(deltaTime);
+  enemyIdle4->Play(deltaTime);
+  enemyIdle5->Play(deltaTime);
+  enemyIdle6->Play(deltaTime);
+  enemyIdle7->Play(deltaTime);
+  enemyIdle8->Play(deltaTime);
+  KaboomIdleLeft->Play(deltaTime);
+  kaboomIdleMiddleRight->Play(deltaTime);
 
 
   if(std::abs(InputSystem::Axis().x) > 0 || std::abs(InputSystem::Axis().y) > 0)
@@ -357,7 +419,7 @@ void Game::Draw()
   }
 
   window->draw(*textObj1->GetText());
-  world->DebugDraw();
+  //world->DebugDraw();
 }
 
 //Keyboard, joysticks, etc.
